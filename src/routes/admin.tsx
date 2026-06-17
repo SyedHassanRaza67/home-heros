@@ -36,7 +36,11 @@ const STATUSES: BookingStatus[] = [
 
 function UsersTab() {
   const sendReset = useServerFn(sendPasswordReset);
+  const setPassword = useServerFn(setUserPassword);
   const [sendingId, setSendingId] = useState<string | null>(null);
+  const [customId, setCustomId] = useState<string | null>(null);
+  const [customPwd, setCustomPwd] = useState("");
+  const [savingId, setSavingId] = useState<string | null>(null);
 
   const { data: users = [], isLoading } = useQuery({
     queryKey: ["admin-users"],
@@ -52,6 +56,24 @@ function UsersTab() {
       toast.error(err?.message ?? "Failed to send reset email");
     } finally {
       setSendingId(null);
+    }
+  }
+
+  async function handleSetCustom(id: string) {
+    if (customPwd.length < 8) {
+      toast.error("Password must be at least 8 characters");
+      return;
+    }
+    setSavingId(id);
+    try {
+      await setPassword({ data: { userId: id, password: customPwd } });
+      toast.success("Password updated");
+      setCustomId(null);
+      setCustomPwd("");
+    } catch (err: any) {
+      toast.error(err?.message ?? "Failed to update password");
+    } finally {
+      setSavingId(null);
     }
   }
 
@@ -73,7 +95,7 @@ function UsersTab() {
     <div className="space-y-3">
       {users.map((u) => (
         <Card key={u.id}>
-          <CardContent className="p-5">
+          <CardContent className="p-5 space-y-3">
             <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
               <div className="space-y-1 text-sm">
                 <p className="font-medium">{u.email}</p>
@@ -83,15 +105,46 @@ function UsersTab() {
                   Last sign-in: {u.last_sign_in_at ? format(new Date(u.last_sign_in_at), "PP p") : "Never"}
                 </p>
               </div>
-              <Button
-                size="sm"
-                variant="outline"
-                disabled={sendingId === u.id}
-                onClick={() => handleReset(u.email, u.id)}
-              >
-                {sendingId === u.id ? <><Spinner className="mr-1" /> Sending…</> : "Reset password"}
-              </Button>
+              <div className="flex flex-wrap gap-2">
+                <Button
+                  size="sm"
+                  variant="outline"
+                  disabled={sendingId === u.id}
+                  onClick={() => handleReset(u.email, u.id)}
+                >
+                  {sendingId === u.id ? <><Spinner className="mr-1" /> Sending…</> : "Email reset link"}
+                </Button>
+                <Button
+                  size="sm"
+                  variant="secondary"
+                  onClick={() => {
+                    setCustomId(customId === u.id ? null : u.id);
+                    setCustomPwd("");
+                  }}
+                >
+                  {customId === u.id ? "Cancel" : "Set custom password"}
+                </Button>
+              </div>
             </div>
+            {customId === u.id && (
+              <div className="flex flex-col gap-2 rounded-lg border bg-muted/30 p-3 md:flex-row md:items-center">
+                <Input
+                  type="text"
+                  placeholder="New password (min 8 chars)"
+                  value={customPwd}
+                  onChange={(e) => setCustomPwd(e.target.value)}
+                  className="md:flex-1"
+                  autoFocus
+                />
+                <Button
+                  size="sm"
+                  disabled={savingId === u.id || customPwd.length < 8}
+                  onClick={() => handleSetCustom(u.id)}
+                >
+                  {savingId === u.id ? <><Spinner className="mr-1" /> Saving…</> : "Save password"}
+                </Button>
+              </div>
+            )}
           </CardContent>
         </Card>
       ))}
