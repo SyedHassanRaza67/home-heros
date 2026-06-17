@@ -23,6 +23,15 @@ export function SiteHeader() {
       <Link to="/book" className="text-sm font-medium hover:text-primary" onClick={() => setOpen(false)}>
         Book a service
       </Link>
+      <Link to="/how-it-works" className="text-sm font-medium hover:text-primary" onClick={() => setOpen(false)}>
+        How it works
+      </Link>
+      <Link to="/about" className="text-sm font-medium hover:text-primary" onClick={() => setOpen(false)}>
+        About
+      </Link>
+      <Link to="/contact" className="text-sm font-medium hover:text-primary" onClick={() => setOpen(false)}>
+        Contact
+      </Link>
       {user && (
         <Link to="/my-bookings" className="text-sm font-medium hover:text-primary" onClick={() => setOpen(false)}>
           My bookings
