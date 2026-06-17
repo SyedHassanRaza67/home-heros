@@ -156,7 +156,12 @@ function AuthPage() {
               </Tabs>
 
               <p className="mt-6 text-center text-xs text-muted-foreground">
-                Admin access? Sign in here — admins are redirected to the dashboard automatically.
+                Admin & providers sign in here — you'll be redirected to your dashboard.
+                <br />
+                Want to work as a pro?{" "}
+                <Link to="/become-provider" className="text-primary hover:underline">
+                  Become a provider
+                </Link>
               </p>
             </CardContent>
           </Card>
