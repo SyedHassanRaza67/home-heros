@@ -6,7 +6,7 @@ import { useAuth } from "@/hooks/use-auth";
 import { supabase } from "@/integrations/supabase/client";
 
 export function SiteHeader() {
-  const { user, isAdmin } = useAuth();
+  const { user, isAdmin, isProvider } = useAuth();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
 
@@ -28,9 +28,19 @@ export function SiteHeader() {
           My bookings
         </Link>
       )}
+      {isProvider && (
+        <Link to="/provider" className="text-sm font-medium hover:text-primary" onClick={() => setOpen(false)}>
+          Provider
+        </Link>
+      )}
       {isAdmin && (
         <Link to="/admin" className="text-sm font-medium hover:text-primary" onClick={() => setOpen(false)}>
           Admin
+        </Link>
+      )}
+      {user && !isProvider && !isAdmin && (
+        <Link to="/become-provider" className="text-sm font-medium hover:text-primary" onClick={() => setOpen(false)}>
+          Become a provider
         </Link>
       )}
     </>
