@@ -118,6 +118,7 @@ function MyBookings() {
                       <div className="text-right">
                         <StatusBadge status={b.status} />
                         <p className="mt-1 text-sm font-semibold">PKR {Number(b.price).toLocaleString()}</p>
+                        <div className="mt-1 flex justify-end"><PaymentMethodBadge method={b.payment_method} /></div>
                       </div>
                     </div>
                     <div className="mt-3 space-y-1 border-t pt-3 text-sm">
