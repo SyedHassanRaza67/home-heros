@@ -17,6 +17,8 @@ import { Calendar } from "@/components/ui/calendar";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { TrustBadges } from "@/components/trust-badges";
+import { Spinner, PageLoading } from "@/components/spinner";
+import { notifyError } from "@/lib/notify";
 import { cn } from "@/lib/utils";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
@@ -123,7 +125,7 @@ function BookPage() {
     setSubmitting(false);
 
     if (error) {
-      toast.error(error.message);
+      notifyError(error, "Couldn't save your booking. Please try again.");
       return;
     }
     toast.success("Booking confirmed! We'll contact you shortly.");
@@ -134,9 +136,7 @@ function BookPage() {
     return (
       <div className="flex min-h-screen flex-col">
         <SiteHeader />
-        <div className="container mx-auto flex flex-1 items-center justify-center p-8 text-muted-foreground">
-          Loading…
-        </div>
+        <PageLoading />
       </div>
     );
   }
@@ -268,7 +268,7 @@ function BookPage() {
                 </div>
 
                 <Button type="submit" className="w-full" size="lg" disabled={submitting}>
-                  {submitting ? "Submitting…" : "Confirm booking"}
+                  {submitting ? (<><Spinner className="mr-2" /> Submitting…</>) : "Confirm booking"}
                 </Button>
               </form>
             </CardContent>

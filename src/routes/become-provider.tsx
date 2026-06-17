@@ -13,6 +13,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Badge } from "@/components/ui/badge";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { Spinner, PageLoading } from "@/components/spinner";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
 import type { Tables } from "@/integrations/supabase/types";
@@ -119,9 +120,7 @@ function BecomeProviderPage() {
     return (
       <div className="flex min-h-screen flex-col">
         <SiteHeader />
-        <div className="container mx-auto flex flex-1 items-center justify-center p-8 text-muted-foreground">
-          Loading…
-        </div>
+        <PageLoading />
       </div>
     );
   }
@@ -216,7 +215,7 @@ function BecomeProviderPage() {
                 </div>
 
                 <Button type="submit" className="w-full" size="lg" disabled={submitting}>
-                  {submitting ? "Submitting…" : "Submit application"}
+                  {submitting ? (<><Spinner className="mr-2" /> Submitting…</>) : "Submit application"}
                 </Button>
               </form>
             </CardContent>

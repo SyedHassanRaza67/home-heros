@@ -6,6 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { TrustBadges } from "@/components/trust-badges";
+import { StarRating } from "@/components/star-rating";
 import { supabase } from "@/integrations/supabase/client";
 import type { Tables } from "@/integrations/supabase/types";
 
@@ -38,6 +39,22 @@ function Home() {
     },
   });
 
+  const { data: testimonials = [] } = useQuery({
+    queryKey: ["home-testimonials"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("reviews")
+        .select("rating, comment, created_at, providers(full_name)")
+        .gte("rating", 4)
+        .not("comment", "is", null)
+        .order("created_at", { ascending: false })
+        .limit(3);
+      if (error) throw error;
+      return data as { rating: number; comment: string | null; created_at: string; providers: { full_name: string } | null }[];
+    },
+  });
+
+
   return (
     <div className="flex min-h-screen flex-col">
       <SiteHeader />
@@ -51,20 +68,20 @@ function Home() {
                 <BadgeCheck className="h-3.5 w-3.5 text-primary" />
                 Vetted technicians · Fixed prices
               </div>
-              <h1 className="text-4xl font-bold tracking-tight md:text-6xl">
+              <h1 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-6xl">
                 Book trusted home services in{" "}
                 <span className="text-primary">Islamabad &amp; Rawalpindi</span>
               </h1>
-              <p className="mt-6 text-lg text-muted-foreground md:text-xl">
+              <p className="mt-5 text-base text-muted-foreground sm:mt-6 sm:text-lg md:text-xl">
                 Skilled electricians and AC technicians at your doorstep — at honest,
                 upfront prices. No surprises.
               </p>
-              <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+              <div className="mt-8 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center">
                 <Button size="lg" asChild>
                   <Link to="/book">Book a service</Link>
                 </Button>
                 <Button size="lg" variant="outline" asChild>
-                  <a href="#services">See services</a>
+                  <Link to="/how-it-works">How it works</Link>
                 </Button>
               </div>
             </div>
@@ -142,6 +159,25 @@ function Home() {
             </div>
           </div>
         </section>
+
+        {testimonials.length > 0 && (
+          <section className="container mx-auto px-4 py-14">
+            <h2 className="text-center text-2xl font-bold tracking-tight md:text-3xl">What customers say</h2>
+            <div className="mx-auto mt-8 grid max-w-5xl grid-cols-1 gap-4 md:grid-cols-3">
+              {testimonials.map((t, i) => (
+                <Card key={i}>
+                  <CardContent className="p-5">
+                    <StarRating value={t.rating} />
+                    <p className="mt-3 text-sm">"{t.comment}"</p>
+                    {t.providers?.full_name && (
+                      <p className="mt-3 text-xs text-muted-foreground">For {t.providers.full_name}</p>
+                    )}
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </section>
+        )}
       </main>
 
       <SiteFooter />

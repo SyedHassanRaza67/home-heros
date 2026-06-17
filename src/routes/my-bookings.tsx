@@ -17,6 +17,7 @@ import { StarRating, RatingSummary } from "@/components/star-rating";
 import { PaymentMethodBadge } from "@/components/payment-method-badge";
 import { BookingProgress } from "@/components/booking-progress";
 import { WhatsAppButton } from "@/components/whatsapp-button";
+import { Spinner } from "@/components/spinner";
 import type { Tables } from "@/integrations/supabase/types";
 
 export const Route = createFileRoute("/my-bookings")({
@@ -91,7 +92,11 @@ function MyBookings() {
             <Button asChild><Link to="/book">New booking</Link></Button>
           </div>
 
-          {isLoading && <p className="text-muted-foreground">Loading…</p>}
+          {isLoading && (
+            <div className="flex items-center justify-center gap-2 py-10 text-muted-foreground">
+              <Spinner /> Loading your bookings…
+            </div>
+          )}
 
           {!isLoading && bookings.length === 0 && (
             <Card>
@@ -226,7 +231,7 @@ function ReviewDialog({ bookingId, providerId, providerName }: { bookingId: stri
         </div>
         <DialogFooter>
           <Button variant="outline" onClick={() => setOpen(false)}>Cancel</Button>
-          <Button onClick={submit} disabled={submitting}>{submitting ? "Submitting…" : "Submit review"}</Button>
+          <Button onClick={submit} disabled={submitting}>{submitting ? (<><Spinner className="mr-2" /> Submitting…</>) : "Submit review"}</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

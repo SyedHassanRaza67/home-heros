@@ -13,6 +13,7 @@ import { Switch } from "@/components/ui/switch";
 import { StatusBadge } from "@/components/status-badge";
 import { BookingProgress } from "@/components/booking-progress";
 import { WhatsAppButton } from "@/components/whatsapp-button";
+import { PageLoading } from "@/components/spinner";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
 import type { Tables } from "@/integrations/supabase/types";
@@ -81,9 +82,7 @@ function ProviderPage() {
     return (
       <div className="flex min-h-screen flex-col">
         <SiteHeader />
-        <div className="container mx-auto flex flex-1 items-center justify-center p-8 text-muted-foreground">
-          Loading…
-        </div>
+        <PageLoading />
       </div>
     );
   }
