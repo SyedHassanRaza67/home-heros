@@ -15,8 +15,8 @@ const styles: Record<BookingStatus, string> = {
 const labels: Record<BookingStatus, string> = {
   pending: "Pending",
   assigned: "Assigned",
-  confirmed: "Confirmed",
-  in_progress: "In progress",
+  confirmed: "Accepted",
+  in_progress: "On the Way",
   completed: "Completed",
   cancelled: "Cancelled",
   rejected_by_provider: "Provider declined",
