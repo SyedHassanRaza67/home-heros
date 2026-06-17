@@ -25,6 +25,7 @@ export type Database = {
           notes: string | null
           phone: string
           price: number
+          provider_id: string | null
           service_name: string
           service_slug: string
           status: Database["public"]["Enums"]["booking_status"]
@@ -40,6 +41,7 @@ export type Database = {
           notes?: string | null
           phone: string
           price: number
+          provider_id?: string | null
           service_name: string
           service_slug: string
           status?: Database["public"]["Enums"]["booking_status"]
@@ -55,12 +57,21 @@ export type Database = {
           notes?: string | null
           phone?: string
           price?: number
+          provider_id?: string | null
           service_name?: string
           service_slug?: string
           status?: Database["public"]["Enums"]["booking_status"]
           user_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "bookings_provider_id_fkey"
+            columns: ["provider_id"]
+            isOneToOne: false
+            referencedRelation: "providers"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       profiles: {
         Row: {
@@ -82,6 +93,93 @@ export type Database = {
           phone?: string | null
         }
         Relationships: []
+      }
+      providers: {
+        Row: {
+          city: string
+          cnic: string
+          created_at: string
+          full_name: string
+          id: string
+          is_available: boolean
+          phone: string
+          photo_url: string | null
+          service_slug: string
+          status: Database["public"]["Enums"]["provider_status"]
+          user_id: string
+        }
+        Insert: {
+          city: string
+          cnic: string
+          created_at?: string
+          full_name: string
+          id?: string
+          is_available?: boolean
+          phone: string
+          photo_url?: string | null
+          service_slug: string
+          status?: Database["public"]["Enums"]["provider_status"]
+          user_id: string
+        }
+        Update: {
+          city?: string
+          cnic?: string
+          created_at?: string
+          full_name?: string
+          id?: string
+          is_available?: boolean
+          phone?: string
+          photo_url?: string | null
+          service_slug?: string
+          status?: Database["public"]["Enums"]["provider_status"]
+          user_id?: string
+        }
+        Relationships: []
+      }
+      reviews: {
+        Row: {
+          booking_id: string
+          comment: string | null
+          created_at: string
+          customer_id: string
+          id: string
+          provider_id: string
+          rating: number
+        }
+        Insert: {
+          booking_id: string
+          comment?: string | null
+          created_at?: string
+          customer_id: string
+          id?: string
+          provider_id: string
+          rating: number
+        }
+        Update: {
+          booking_id?: string
+          comment?: string | null
+          created_at?: string
+          customer_id?: string
+          id?: string
+          provider_id?: string
+          rating?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reviews_booking_id_fkey"
+            columns: ["booking_id"]
+            isOneToOne: true
+            referencedRelation: "bookings"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "reviews_provider_id_fkey"
+            columns: ["provider_id"]
+            isOneToOne: false
+            referencedRelation: "providers"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       services: {
         Row: {
@@ -151,13 +249,16 @@ export type Database = {
       }
     }
     Enums: {
-      app_role: "admin" | "customer"
+      app_role: "admin" | "customer" | "provider"
       booking_status:
         | "pending"
         | "confirmed"
         | "in_progress"
         | "completed"
         | "cancelled"
+        | "assigned"
+        | "rejected_by_provider"
+      provider_status: "pending" | "approved" | "rejected"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -285,14 +386,17 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      app_role: ["admin", "customer"],
+      app_role: ["admin", "customer", "provider"],
       booking_status: [
         "pending",
         "confirmed",
         "in_progress",
         "completed",
         "cancelled",
+        "assigned",
+        "rejected_by_provider",
       ],
+      provider_status: ["pending", "approved", "rejected"],
     },
   },
 } as const

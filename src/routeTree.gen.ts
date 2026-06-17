@@ -9,12 +9,19 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ProviderRouteImport } from './routes/provider'
 import { Route as MyBookingsRouteImport } from './routes/my-bookings'
 import { Route as BookRouteImport } from './routes/book'
+import { Route as BecomeProviderRouteImport } from './routes/become-provider'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 
+const ProviderRoute = ProviderRouteImport.update({
+  id: '/provider',
+  path: '/provider',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MyBookingsRoute = MyBookingsRouteImport.update({
   id: '/my-bookings',
   path: '/my-bookings',
@@ -23,6 +30,11 @@ const MyBookingsRoute = MyBookingsRouteImport.update({
 const BookRoute = BookRouteImport.update({
   id: '/book',
   path: '/book',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BecomeProviderRoute = BecomeProviderRouteImport.update({
+  id: '/become-provider',
+  path: '/become-provider',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthRoute = AuthRouteImport.update({
@@ -45,42 +57,79 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/auth': typeof AuthRoute
+  '/become-provider': typeof BecomeProviderRoute
   '/book': typeof BookRoute
   '/my-bookings': typeof MyBookingsRoute
+  '/provider': typeof ProviderRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/auth': typeof AuthRoute
+  '/become-provider': typeof BecomeProviderRoute
   '/book': typeof BookRoute
   '/my-bookings': typeof MyBookingsRoute
+  '/provider': typeof ProviderRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/auth': typeof AuthRoute
+  '/become-provider': typeof BecomeProviderRoute
   '/book': typeof BookRoute
   '/my-bookings': typeof MyBookingsRoute
+  '/provider': typeof ProviderRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/admin' | '/auth' | '/book' | '/my-bookings'
+  fullPaths:
+    | '/'
+    | '/admin'
+    | '/auth'
+    | '/become-provider'
+    | '/book'
+    | '/my-bookings'
+    | '/provider'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/admin' | '/auth' | '/book' | '/my-bookings'
-  id: '__root__' | '/' | '/admin' | '/auth' | '/book' | '/my-bookings'
+  to:
+    | '/'
+    | '/admin'
+    | '/auth'
+    | '/become-provider'
+    | '/book'
+    | '/my-bookings'
+    | '/provider'
+  id:
+    | '__root__'
+    | '/'
+    | '/admin'
+    | '/auth'
+    | '/become-provider'
+    | '/book'
+    | '/my-bookings'
+    | '/provider'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRoute
   AuthRoute: typeof AuthRoute
+  BecomeProviderRoute: typeof BecomeProviderRoute
   BookRoute: typeof BookRoute
   MyBookingsRoute: typeof MyBookingsRoute
+  ProviderRoute: typeof ProviderRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/provider': {
+      id: '/provider'
+      path: '/provider'
+      fullPath: '/provider'
+      preLoaderRoute: typeof ProviderRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/my-bookings': {
       id: '/my-bookings'
       path: '/my-bookings'
@@ -93,6 +142,13 @@ declare module '@tanstack/react-router' {
       path: '/book'
       fullPath: '/book'
       preLoaderRoute: typeof BookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/become-provider': {
+      id: '/become-provider'
+      path: '/become-provider'
+      fullPath: '/become-provider'
+      preLoaderRoute: typeof BecomeProviderRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth': {
@@ -123,8 +179,10 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRoute,
   AuthRoute: AuthRoute,
+  BecomeProviderRoute: BecomeProviderRoute,
   BookRoute: BookRoute,
   MyBookingsRoute: MyBookingsRoute,
+  ProviderRoute: ProviderRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
