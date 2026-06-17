@@ -215,7 +215,7 @@ function BecomeProviderPage() {
                 </div>
 
                 <Button type="submit" className="w-full" size="lg" disabled={submitting}>
-                  {submitting ? "Submitting…" : "Submit application"}
+                  {submitting ? (<><Spinner className="mr-2" /> Submitting…</>) : "Submit application"}
                 </Button>
               </form>
             </CardContent>

@@ -16,6 +16,7 @@ import { PaymentMethodBadge } from "@/components/payment-method-badge";
 import { RatingSummary } from "@/components/star-rating";
 import { BookingProgress } from "@/components/booking-progress";
 import { WhatsAppButton } from "@/components/whatsapp-button";
+import { Spinner, PageLoading } from "@/components/spinner";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
 import type { Enums, Tables } from "@/integrations/supabase/types";
