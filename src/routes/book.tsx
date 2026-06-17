@@ -17,6 +17,8 @@ import { Calendar } from "@/components/ui/calendar";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { TrustBadges } from "@/components/trust-badges";
+import { Spinner, PageLoading } from "@/components/spinner";
+import { notifyError } from "@/lib/notify";
 import { cn } from "@/lib/utils";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
