@@ -13,6 +13,7 @@ import { Switch } from "@/components/ui/switch";
 import { StatusBadge } from "@/components/status-badge";
 import { BookingProgress } from "@/components/booking-progress";
 import { WhatsAppButton } from "@/components/whatsapp-button";
+import { PageLoading } from "@/components/spinner";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
 import type { Tables } from "@/integrations/supabase/types";

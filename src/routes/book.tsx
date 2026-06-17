@@ -268,7 +268,7 @@ function BookPage() {
                 </div>
 
                 <Button type="submit" className="w-full" size="lg" disabled={submitting}>
-                  {submitting ? "Submitting…" : "Confirm booking"}
+                  {submitting ? (<><Spinner className="mr-2" /> Submitting…</>) : "Confirm booking"}
                 </Button>
               </form>
             </CardContent>
