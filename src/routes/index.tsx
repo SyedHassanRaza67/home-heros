@@ -39,6 +39,22 @@ function Home() {
     },
   });
 
+  const { data: testimonials = [] } = useQuery({
+    queryKey: ["home-testimonials"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("reviews")
+        .select("rating, comment, created_at, providers(full_name)")
+        .gte("rating", 4)
+        .not("comment", "is", null)
+        .order("created_at", { ascending: false })
+        .limit(3);
+      if (error) throw error;
+      return data as { rating: number; comment: string | null; created_at: string; providers: { full_name: string } | null }[];
+    },
+  });
+
+
   return (
     <div className="flex min-h-screen flex-col">
       <SiteHeader />
