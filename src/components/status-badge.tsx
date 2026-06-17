@@ -1,5 +1,6 @@
 import { Badge } from "@/components/ui/badge";
-import type { BookingStatus } from "@/integrations/supabase/types";
+import type { Enums } from "@/integrations/supabase/types";
+type BookingStatus = Enums<"booking_status">;
 
 const styles: Record<BookingStatus, string> = {
   pending: "bg-warning/20 text-warning-foreground border-warning/30",

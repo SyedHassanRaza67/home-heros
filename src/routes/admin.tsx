@@ -11,7 +11,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { StatusBadge } from "@/components/status-badge";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
-import type { BookingStatus, Tables } from "@/integrations/supabase/types";
+import type { Enums, Tables } from "@/integrations/supabase/types";
+type BookingStatus = Enums<"booking_status">;
 
 export const Route = createFileRoute("/admin")({
   head: () => ({ meta: [{ title: "Admin dashboard — HomeFix" }] }),
