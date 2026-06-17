@@ -11,6 +11,8 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
 import { StatusBadge } from "@/components/status-badge";
+import { BookingProgress } from "@/components/booking-progress";
+import { WhatsAppButton } from "@/components/whatsapp-button";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
 import type { Tables } from "@/integrations/supabase/types";
@@ -177,18 +179,28 @@ function ProviderPage() {
                     <p className="md:col-span-2"><span className="text-muted-foreground">Address:</span> {b.address}</p>
                     {b.notes && <p className="md:col-span-2"><span className="text-muted-foreground">Notes:</span> {b.notes}</p>}
                   </div>
+                  <div className="pt-1">
+                    <BookingProgress status={b.status} />
+                  </div>
                   <div className="flex flex-wrap gap-2 pt-2">
-                    {b.status === "assigned" && (
+                    {(b.status === "assigned" || b.status === "pending") && (
                       <>
                         <Button size="sm" onClick={() => updateBooking(b.id, { status: "confirmed" })}>Accept</Button>
                         <Button size="sm" variant="outline" onClick={() => updateBooking(b.id, { status: "rejected_by_provider", provider_id: null })}>Reject</Button>
                       </>
                     )}
                     {b.status === "confirmed" && (
-                      <Button size="sm" onClick={() => updateBooking(b.id, { status: "in_progress" })}>Start job</Button>
+                      <Button size="sm" onClick={() => updateBooking(b.id, { status: "in_progress" })}>On the way</Button>
                     )}
-                    {(b.status === "confirmed" || b.status === "in_progress") && (
-                      <Button size="sm" variant="default" onClick={() => updateBooking(b.id, { status: "completed" })}>Mark completed</Button>
+                    {b.status === "in_progress" && (
+                      <Button size="sm" onClick={() => updateBooking(b.id, { status: "completed" })}>Mark completed</Button>
+                    )}
+                    {b.status !== "cancelled" && b.status !== "rejected_by_provider" && (
+                      <WhatsAppButton
+                        phone={b.phone}
+                        label={`Message ${(b.customer_name ?? "customer").split(" ")[0]}`}
+                        message={`Hi, regarding your ${b.service_name} booking on ${format(new Date(b.booking_date), "PPP")}.`}
+                      />
                     )}
                   </div>
                 </CardContent>

@@ -15,6 +15,8 @@ import { useAuth } from "@/hooks/use-auth";
 import { StatusBadge } from "@/components/status-badge";
 import { StarRating, RatingSummary } from "@/components/star-rating";
 import { PaymentMethodBadge } from "@/components/payment-method-badge";
+import { BookingProgress } from "@/components/booking-progress";
+import { WhatsAppButton } from "@/components/whatsapp-button";
 import type { Tables } from "@/integrations/supabase/types";
 
 export const Route = createFileRoute("/my-bookings")({
@@ -126,13 +128,27 @@ function MyBookings() {
                       <p><span className="text-muted-foreground">Phone:</span> {b.phone}</p>
                       {b.notes && <p><span className="text-muted-foreground">Notes:</span> {b.notes}</p>}
                       {provider && (
-                        <p className="flex items-center gap-2">
+                        <p className="flex flex-wrap items-center gap-2">
                           <span className="text-muted-foreground">Provider:</span>
                           <span>{provider.full_name} ({provider.phone})</span>
                           <RatingSummary avg={r ? r.sum / r.count : 0} count={r?.count ?? 0} />
                         </p>
                       )}
                     </div>
+
+                    <div className="mt-4 border-t pt-4">
+                      <BookingProgress status={b.status} />
+                    </div>
+
+                    {provider && b.status !== "cancelled" && b.status !== "rejected_by_provider" && (
+                      <div className="mt-3 flex flex-wrap gap-2">
+                        <WhatsAppButton
+                          phone={provider.phone}
+                          label={`Message ${provider.full_name.split(" ")[0]}`}
+                          message={`Hi, this is about my ${b.service_name} booking on ${format(new Date(b.booking_date), "PPP")}.`}
+                        />
+                      </div>
+                    )}
 
                     {b.status === "completed" && provider && (
                       <div className="mt-3 border-t pt-3">
