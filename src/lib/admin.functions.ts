@@ -47,3 +47,28 @@ export const sendPasswordReset = createServerFn({ method: "POST" })
     if (error) throw new Error(error.message);
     return { success: true };
   });
+
+export const setUserPassword = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((data) =>
+    z.object({
+      userId: z.string().uuid(),
+      password: z.string().min(8, "Password must be at least 8 characters").max(72),
+    }).parse(data),
+  )
+  .handler(async ({ context, data }) => {
+    const { data: isAdmin, error: roleErr } = await context.supabase.rpc("has_role", {
+      _user_id: context.userId,
+      _role: "admin",
+    });
+    if (roleErr || !isAdmin) {
+      throw new Response("Admin access required", { status: 403 });
+    }
+
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { error } = await supabaseAdmin.auth.admin.updateUserById(data.userId, {
+      password: data.password,
+    });
+    if (error) throw new Error(error.message);
+    return { success: true };
+  });
