@@ -155,6 +155,7 @@ function AdminPage() {
             <TabsList>
               <TabsTrigger value="bookings">Bookings</TabsTrigger>
               <TabsTrigger value="providers">Providers</TabsTrigger>
+              <TabsTrigger value="users">Users</TabsTrigger>
             </TabsList>
 
             <TabsContent value="bookings" className="pt-4 space-y-4">
