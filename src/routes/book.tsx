@@ -86,10 +86,16 @@ function BookPage() {
       phone: fd.get("phone"),
       customer_name: fd.get("name"),
       notes: fd.get("notes") || undefined,
+      payment_method: paymentMethod,
     });
 
     if (!parsed.success) {
       toast.error(parsed.error.issues[0].message);
+      return;
+    }
+
+    if (parsed.data.payment_method !== "cash") {
+      toast.error("That payment method is coming soon — please pick Cash on Service.");
       return;
     }
 
@@ -111,6 +117,7 @@ function BookPage() {
       phone: parsed.data.phone,
       customer_name: parsed.data.customer_name,
       notes: parsed.data.notes ?? null,
+      payment_method: parsed.data.payment_method,
     });
     setSubmitting(false);
 
