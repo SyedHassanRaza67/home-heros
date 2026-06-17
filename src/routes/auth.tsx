@@ -31,16 +31,17 @@ const signUpSchema = signInSchema.extend({
 });
 
 function AuthPage() {
-  const { user, isAdmin, loading } = useAuth();
+  const { user, isAdmin, isProvider, loading } = useAuth();
   const navigate = useNavigate();
   const [mode, setMode] = useState<"signin" | "signup">("signin");
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
     if (!loading && user) {
-      navigate({ to: isAdmin ? "/admin" : "/my-bookings", replace: true });
+      const dest = isAdmin ? "/admin" : isProvider ? "/provider" : "/my-bookings";
+      navigate({ to: dest, replace: true });
     }
-  }, [user, isAdmin, loading, navigate]);
+  }, [user, isAdmin, isProvider, loading, navigate]);
 
   async function handleSignIn(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
