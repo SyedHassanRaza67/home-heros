@@ -4,14 +4,9 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { Card, CardContent } from "@/components/ui/card";
 import { WhatsAppButton } from "@/components/whatsapp-button";
+import { SUPPORT_CONTACT } from "@/lib/contact";
 
-// ⚠️ Update these contact details to your real ones (also update in src/components/site-footer.tsx).
-const CONTACT = {
-  phone: "+92 300 0000000",
-  email: "hello@homefix.pk",
-  whatsapp: "+92 300 0000000",
-  area: "Islamabad & Rawalpindi",
-};
+const CONTACT = SUPPORT_CONTACT;
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
