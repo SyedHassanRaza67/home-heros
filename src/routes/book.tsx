@@ -44,6 +44,7 @@ const schema = z.object({
   phone: z.string().trim().regex(/^[0-9+\-\s()]{7,20}$/, "Enter a valid phone"),
   customer_name: z.string().trim().min(2).max(100),
   notes: z.string().trim().max(500).optional(),
+  payment_method: z.enum(["cash", "jazzcash", "easypaisa"]),
 });
 
 function BookPage() {
