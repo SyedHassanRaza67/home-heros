@@ -159,6 +159,25 @@ function Home() {
             </div>
           </div>
         </section>
+
+        {testimonials.length > 0 && (
+          <section className="container mx-auto px-4 py-14">
+            <h2 className="text-center text-2xl font-bold tracking-tight md:text-3xl">What customers say</h2>
+            <div className="mx-auto mt-8 grid max-w-5xl grid-cols-1 gap-4 md:grid-cols-3">
+              {testimonials.map((t, i) => (
+                <Card key={i}>
+                  <CardContent className="p-5">
+                    <StarRating value={t.rating} />
+                    <p className="mt-3 text-sm">"{t.comment}"</p>
+                    {t.providers?.full_name && (
+                      <p className="mt-3 text-xs text-muted-foreground">For {t.providers.full_name}</p>
+                    )}
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </section>
+        )}
       </main>
 
       <SiteFooter />
