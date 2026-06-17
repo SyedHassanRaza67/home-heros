@@ -23,7 +23,7 @@ import type { Enums, Tables } from "@/integrations/supabase/types";
 type BookingStatus = Enums<"booking_status">;
 
 export const Route = createFileRoute("/admin")({
-  head: () => ({ meta: [{ title: "Admin dashboard — HomeFix" }] }),
+  head: () => ({ meta: [{ title: "Admin dashboard — Home Hero" }] }),
   component: AdminPage,
 });
 

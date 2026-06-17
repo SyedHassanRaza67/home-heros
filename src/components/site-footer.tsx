@@ -13,7 +13,7 @@ export function SiteFooter() {
               <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
                 <Wrench className="h-4 w-4" />
               </div>
-              <span className="text-base font-bold">HomeFix</span>
+              <span className="text-base font-bold">Home Hero</span>
             </Link>
             <p className="mt-3 text-sm text-muted-foreground">
               Trusted home services in {SUPPORT_CONTACT.area}.
@@ -59,7 +59,7 @@ export function SiteFooter() {
         </div>
 
         <div className="mt-8 border-t pt-6 text-center text-xs text-muted-foreground">
-          © {new Date().getFullYear()} HomeFix. All rights reserved.
+          © {new Date().getFullYear()} Home Hero. All rights reserved.
         </div>
       </div>
     </footer>

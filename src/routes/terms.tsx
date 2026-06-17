@@ -5,10 +5,10 @@ import { SiteFooter } from "@/components/site-footer";
 export const Route = createFileRoute("/terms")({
   head: () => ({
     meta: [
-      { title: "Terms of Service — HomeFix" },
-      { name: "description", content: "The terms that govern your use of HomeFix services." },
-      { property: "og:title", content: "Terms of Service — HomeFix" },
-      { property: "og:description", content: "Terms governing the use of HomeFix." },
+      { title: "Terms of Service — Home Hero" },
+      { name: "description", content: "The terms that govern your use of Home Hero services." },
+      { property: "og:title", content: "Terms of Service — Home Hero" },
+      { property: "og:description", content: "Terms governing the use of Home Hero." },
     ],
   }),
   component: TermsPage,
@@ -28,13 +28,13 @@ function TermsPage() {
 
           <div className="prose-sm space-y-6 rounded-2xl border bg-card p-6 text-sm leading-relaxed md:text-base">
             <Section title="1. Acceptance of terms">
-              By creating an account or booking a service through HomeFix ("the platform"), you agree to these
+              By creating an account or booking a service through Home Hero ("the platform"), you agree to these
               Terms of Service. If you do not agree, please don't use the platform.
             </Section>
 
             <Section title="2. Our service">
-              HomeFix connects customers in Pakistan with independent home-service professionals (electricians,
-              AC technicians, and similar trades). HomeFix is a marketplace — providers are not our employees.
+              Home Hero connects customers in Pakistan with independent home-service professionals (electricians,
+              AC technicians, and similar trades). Home Hero is a marketplace — providers are not our employees.
             </Section>
 
             <Section title="3. Bookings and payments">
@@ -50,7 +50,7 @@ function TermsPage() {
 
             <Section title="5. Provider conduct">
               Providers are verified (CNIC and photo) before they can accept bookings, but they remain
-              independent contractors. HomeFix is not responsible for damages caused by a provider's conduct,
+              independent contractors. Home Hero is not responsible for damages caused by a provider's conduct,
               though we will investigate complaints in good faith and may remove providers who breach our
               standards.
             </Section>
@@ -61,7 +61,7 @@ function TermsPage() {
             </Section>
 
             <Section title="7. Limitation of liability">
-              To the maximum extent permitted by law, HomeFix is not liable for indirect, incidental, or
+              To the maximum extent permitted by law, Home Hero is not liable for indirect, incidental, or
               consequential damages arising from your use of the platform. Our total liability for any claim
               is limited to the price of the booking giving rise to the claim.
             </Section>

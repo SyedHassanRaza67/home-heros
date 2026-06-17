@@ -16,7 +16,7 @@ import { useAuth } from "@/hooks/use-auth";
 export const Route = createFileRoute("/auth")({
   head: () => ({
     meta: [
-      { title: "Sign in — HomeFix" },
+      { title: "Sign in — Home Hero" },
       { name: "description", content: "Sign in or create an account to book home services." },
     ],
   }),
@@ -102,7 +102,7 @@ function AuthPage() {
             <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-primary-foreground">
               <Wrench className="h-5 w-5" />
             </div>
-            <span className="text-xl font-bold">HomeFix</span>
+            <span className="text-xl font-bold">Home Hero</span>
           </Link>
 
           <Card>

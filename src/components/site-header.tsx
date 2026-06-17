@@ -68,7 +68,7 @@ export function SiteHeader() {
           <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-primary-foreground">
             <Wrench className="h-5 w-5" />
           </div>
-          <span className="text-lg font-bold tracking-tight">HomeFix</span>
+          <span className="text-lg font-bold tracking-tight">Home Hero</span>
         </Link>
 
         <nav className="hidden min-w-0 items-center gap-5 md:flex">{links}</nav>
