@@ -135,6 +135,11 @@ function Home() {
                 </div>
               ))}
             </div>
+            <div className="mt-8 text-center">
+              <Link to="/how-it-works" className="text-sm font-medium text-primary hover:underline">
+                Learn more about how HomeFix works →
+              </Link>
+            </div>
           </div>
         </section>
       </main>
