@@ -1,5 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useServerFn } from "@tanstack/react-start";
 import { useEffect, useState } from "react";
 import { format } from "date-fns";
 import { toast } from "sonner";
@@ -19,6 +20,7 @@ import { WhatsAppButton } from "@/components/whatsapp-button";
 import { Spinner, PageLoading } from "@/components/spinner";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
+import { listUsers, sendPasswordReset } from "@/lib/admin.functions";
 import type { Enums, Tables } from "@/integrations/supabase/types";
 type BookingStatus = Enums<"booking_status">;
 
@@ -30,6 +32,71 @@ export const Route = createFileRoute("/admin")({
 const STATUSES: BookingStatus[] = [
   "pending", "confirmed", "in_progress", "completed", "cancelled", "assigned", "rejected_by_provider",
 ];
+
+function UsersTab() {
+  const sendReset = useServerFn(sendPasswordReset);
+  const [sendingId, setSendingId] = useState<string | null>(null);
+
+  const { data: users = [], isLoading } = useQuery({
+    queryKey: ["admin-users"],
+    queryFn: () => listUsers(),
+  });
+
+  async function handleReset(email: string, id: string) {
+    setSendingId(id);
+    try {
+      await sendReset({ data: { email } });
+      toast.success(`Reset email sent to ${email}`);
+    } catch (err: any) {
+      toast.error(err?.message ?? "Failed to send reset email");
+    } finally {
+      setSendingId(null);
+    }
+  }
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center gap-2 py-10 text-muted-foreground">
+        <Spinner /> Loading users…
+      </div>
+    );
+  }
+
+  if (users.length === 0) {
+    return (
+      <Card><CardContent className="p-10 text-center text-muted-foreground">No users found.</CardContent></Card>
+    );
+  }
+
+  return (
+    <div className="space-y-3">
+      {users.map((u) => (
+        <Card key={u.id}>
+          <CardContent className="p-5">
+            <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+              <div className="space-y-1 text-sm">
+                <p className="font-medium">{u.email}</p>
+                <p className="text-muted-foreground">
+                  Registered: {u.created_at ? format(new Date(u.created_at), "PP") : "—"}
+                  {" "}·{" "}
+                  Last sign-in: {u.last_sign_in_at ? format(new Date(u.last_sign_in_at), "PP p") : "Never"}
+                </p>
+              </div>
+              <Button
+                size="sm"
+                variant="outline"
+                disabled={sendingId === u.id}
+                onClick={() => handleReset(u.email, u.id)}
+              >
+                {sendingId === u.id ? <><Spinner className="mr-1" /> Sending…</> : "Reset password"}
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      ))}
+    </div>
+  );
+}
 
 function AdminPage() {
   const { user, isAdmin, loading } = useAuth();
@@ -153,6 +220,7 @@ function AdminPage() {
             <TabsList>
               <TabsTrigger value="bookings">Bookings</TabsTrigger>
               <TabsTrigger value="providers">Providers</TabsTrigger>
+              <TabsTrigger value="users">Users</TabsTrigger>
             </TabsList>
 
             <TabsContent value="bookings" className="pt-4 space-y-4">
@@ -325,6 +393,10 @@ function AdminPage() {
                   </Card>
                 );
               })}
+            </TabsContent>
+
+            <TabsContent value="users" className="pt-4 space-y-3">
+              <UsersTab />
             </TabsContent>
           </Tabs>
         </div>

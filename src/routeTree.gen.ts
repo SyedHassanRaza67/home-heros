@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TermsRouteImport } from './routes/terms'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as ProviderRouteImport } from './routes/provider'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as MyBookingsRouteImport } from './routes/my-bookings'
@@ -25,6 +26,11 @@ import { Route as IndexRouteImport } from './routes/index'
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
   path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProviderRoute = ProviderRouteImport.update({
@@ -95,6 +101,7 @@ export interface FileRoutesByFullPath {
   '/my-bookings': typeof MyBookingsRoute
   '/privacy': typeof PrivacyRoute
   '/provider': typeof ProviderRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/terms': typeof TermsRoute
 }
 export interface FileRoutesByTo {
@@ -109,6 +116,7 @@ export interface FileRoutesByTo {
   '/my-bookings': typeof MyBookingsRoute
   '/privacy': typeof PrivacyRoute
   '/provider': typeof ProviderRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/terms': typeof TermsRoute
 }
 export interface FileRoutesById {
@@ -124,6 +132,7 @@ export interface FileRoutesById {
   '/my-bookings': typeof MyBookingsRoute
   '/privacy': typeof PrivacyRoute
   '/provider': typeof ProviderRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/terms': typeof TermsRoute
 }
 export interface FileRouteTypes {
@@ -140,6 +149,7 @@ export interface FileRouteTypes {
     | '/my-bookings'
     | '/privacy'
     | '/provider'
+    | '/reset-password'
     | '/terms'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -154,6 +164,7 @@ export interface FileRouteTypes {
     | '/my-bookings'
     | '/privacy'
     | '/provider'
+    | '/reset-password'
     | '/terms'
   id:
     | '__root__'
@@ -168,6 +179,7 @@ export interface FileRouteTypes {
     | '/my-bookings'
     | '/privacy'
     | '/provider'
+    | '/reset-password'
     | '/terms'
   fileRoutesById: FileRoutesById
 }
@@ -183,6 +195,7 @@ export interface RootRouteChildren {
   MyBookingsRoute: typeof MyBookingsRoute
   PrivacyRoute: typeof PrivacyRoute
   ProviderRoute: typeof ProviderRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
   TermsRoute: typeof TermsRoute
 }
 
@@ -193,6 +206,13 @@ declare module '@tanstack/react-router' {
       path: '/terms'
       fullPath: '/terms'
       preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/provider': {
@@ -287,6 +307,7 @@ const rootRouteChildren: RootRouteChildren = {
   MyBookingsRoute: MyBookingsRoute,
   PrivacyRoute: PrivacyRoute,
   ProviderRoute: ProviderRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
   TermsRoute: TermsRoute,
 }
 export const routeTree = rootRouteImport

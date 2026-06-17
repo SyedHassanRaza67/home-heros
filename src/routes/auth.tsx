@@ -35,6 +35,7 @@ function AuthPage() {
   const { user, isAdmin, isProvider, loading } = useAuth();
   const navigate = useNavigate();
   const [mode, setMode] = useState<"signin" | "signup">("signin");
+  const [forgotMode, setForgotMode] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
@@ -94,6 +95,27 @@ function AuthPage() {
     toast.success("Account created! You're signed in.");
   }
 
+  async function handleForgot(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const fd = new FormData(e.currentTarget);
+    const email = String(fd.get("email") ?? "").trim();
+    if (!email || !email.includes("@")) {
+      toast.error("Enter a valid email");
+      return;
+    }
+    setSubmitting(true);
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/reset-password`,
+    });
+    setSubmitting(false);
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+    toast.success("Reset email sent! Check your inbox.");
+    setForgotMode(false);
+  }
+
   return (
     <div className="flex min-h-screen flex-col bg-secondary/40">
       <div className="container mx-auto flex flex-1 items-center justify-center px-4 py-12">
@@ -113,48 +135,70 @@ function AuthPage() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <Tabs value={mode} onValueChange={(v) => setMode(v as "signin" | "signup")}>
-                <TabsList className="grid w-full grid-cols-2">
-                  <TabsTrigger value="signin">Sign in</TabsTrigger>
-                  <TabsTrigger value="signup">Create account</TabsTrigger>
-                </TabsList>
+              {forgotMode ? (
+                <form onSubmit={handleForgot} className="space-y-4 pt-2">
+                  <div className="space-y-2">
+                    <Label htmlFor="email-forgot">Email</Label>
+                    <Input id="email-forgot" name="email" type="email" required autoComplete="email" />
+                  </div>
+                  <Button type="submit" className="w-full" disabled={submitting}>
+                    {submitting ? (<><Spinner className="mr-2" /> Sending…</>) : "Send reset email"}
+                  </Button>
+                  <p className="text-center text-sm">
+                    <button type="button" onClick={() => setForgotMode(false)} className="text-primary hover:underline">
+                      ← Back to sign in
+                    </button>
+                  </p>
+                </form>
+              ) : (
+                <Tabs value={mode} onValueChange={(v) => setMode(v as "signin" | "signup")}>
+                  <TabsList className="grid w-full grid-cols-2">
+                    <TabsTrigger value="signin">Sign in</TabsTrigger>
+                    <TabsTrigger value="signup">Create account</TabsTrigger>
+                  </TabsList>
 
-                <TabsContent value="signin">
-                  <form onSubmit={handleSignIn} className="space-y-4 pt-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="email-in">Email</Label>
-                      <Input id="email-in" name="email" type="email" required autoComplete="email" />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="password-in">Password</Label>
-                      <Input id="password-in" name="password" type="password" required autoComplete="current-password" />
-                    </div>
-                    <Button type="submit" className="w-full" disabled={submitting}>
-                      {submitting ? (<><Spinner className="mr-2" /> Signing in…</>) : "Sign in"}
-                    </Button>
-                  </form>
-                </TabsContent>
+                  <TabsContent value="signin">
+                    <form onSubmit={handleSignIn} className="space-y-4 pt-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="email-in">Email</Label>
+                        <Input id="email-in" name="email" type="email" required autoComplete="email" />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="password-in">Password</Label>
+                        <Input id="password-in" name="password" type="password" required autoComplete="current-password" />
+                      </div>
+                      <Button type="submit" className="w-full" disabled={submitting}>
+                        {submitting ? (<><Spinner className="mr-2" /> Signing in…</>) : "Sign in"}
+                      </Button>
+                      <p className="text-center text-sm">
+                        <button type="button" onClick={() => setForgotMode(true)} className="text-muted-foreground hover:text-primary">
+                          Forgot password?
+                        </button>
+                      </p>
+                    </form>
+                  </TabsContent>
 
-                <TabsContent value="signup">
-                  <form onSubmit={handleSignUp} className="space-y-4 pt-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="name-up">Full name</Label>
-                      <Input id="name-up" name="fullName" required />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="email-up">Email</Label>
-                      <Input id="email-up" name="email" type="email" required autoComplete="email" />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="password-up">Password</Label>
-                      <Input id="password-up" name="password" type="password" required minLength={6} autoComplete="new-password" />
-                    </div>
-                    <Button type="submit" className="w-full" disabled={submitting}>
-                      {submitting ? (<><Spinner className="mr-2" /> Creating…</>) : "Create account"}
-                    </Button>
-                  </form>
-                </TabsContent>
-              </Tabs>
+                  <TabsContent value="signup">
+                    <form onSubmit={handleSignUp} className="space-y-4 pt-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="name-up">Full name</Label>
+                        <Input id="name-up" name="fullName" required />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="email-up">Email</Label>
+                        <Input id="email-up" name="email" type="email" required autoComplete="email" />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="password-up">Password</Label>
+                        <Input id="password-up" name="password" type="password" required minLength={6} autoComplete="new-password" />
+                      </div>
+                      <Button type="submit" className="w-full" disabled={submitting}>
+                        {submitting ? (<><Spinner className="mr-2" /> Creating…</>) : "Create account"}
+                      </Button>
+                    </form>
+                  </TabsContent>
+                </Tabs>
+              )}
 
               <p className="mt-6 text-center text-xs text-muted-foreground">
                 Admin & providers sign in here — you'll be redirected to your dashboard.
