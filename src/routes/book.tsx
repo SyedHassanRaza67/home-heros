@@ -227,6 +227,44 @@ function BookPage() {
                   <Textarea id="notes" name="notes" placeholder="Anything we should know?" maxLength={500} rows={2} />
                 </div>
 
+                <div className="space-y-2">
+                  <Label>Payment method</Label>
+                  <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
+                    {([
+                      { id: "cash", title: "Cash on Service", subtitle: "Pay the technician after the job.", disabled: false },
+                      { id: "jazzcash", title: "JazzCash", subtitle: "Mobile wallet", disabled: true },
+                      { id: "easypaisa", title: "easypaisa", subtitle: "Mobile wallet", disabled: true },
+                    ] as const).map((opt) => {
+                      const selected = paymentMethod === opt.id;
+                      return (
+                        <button
+                          key={opt.id}
+                          type="button"
+                          disabled={opt.disabled}
+                          onClick={() => !opt.disabled && setPaymentMethod(opt.id)}
+                          className={cn(
+                            "rounded-lg border-2 p-3 text-left transition",
+                            selected
+                              ? "border-primary bg-primary/5"
+                              : "border-border hover:border-primary/50",
+                            opt.disabled && "cursor-not-allowed opacity-60 hover:border-border",
+                          )}
+                        >
+                          <div className="flex items-center justify-between gap-2">
+                            <span className="text-sm font-semibold">{opt.title}</span>
+                            {opt.disabled && (
+                              <span className="rounded-full bg-muted px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-muted-foreground">
+                                Coming soon
+                              </span>
+                            )}
+                          </div>
+                          <p className="mt-1 text-xs text-muted-foreground">{opt.subtitle}</p>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
                 <Button type="submit" className="w-full" size="lg" disabled={submitting}>
                   {submitting ? "Submitting…" : "Confirm booking"}
                 </Button>
