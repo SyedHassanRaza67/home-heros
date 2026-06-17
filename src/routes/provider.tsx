@@ -82,9 +82,7 @@ function ProviderPage() {
     return (
       <div className="flex min-h-screen flex-col">
         <SiteHeader />
-        <div className="container mx-auto flex flex-1 items-center justify-center p-8 text-muted-foreground">
-          Loading…
-        </div>
+        <PageLoading />
       </div>
     );
   }
