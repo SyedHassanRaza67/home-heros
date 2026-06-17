@@ -21,7 +21,7 @@ import { Spinner } from "@/components/spinner";
 import type { Tables } from "@/integrations/supabase/types";
 
 export const Route = createFileRoute("/my-bookings")({
-  head: () => ({ meta: [{ title: "My bookings — HomeFix" }] }),
+  head: () => ({ meta: [{ title: "My bookings — Home Hero" }] }),
   component: MyBookings,
 });
 

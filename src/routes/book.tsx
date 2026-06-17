@@ -29,7 +29,7 @@ type Search = { service?: string };
 export const Route = createFileRoute("/book")({
   head: () => ({
     meta: [
-      { title: "Book a service — HomeFix" },
+      { title: "Book a service — Home Hero" },
       { name: "description", content: "Book an electrician or AC repair in Islamabad or Rawalpindi." },
     ],
   }),
