@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as MyBookingsRouteImport } from './routes/my-bookings'
 import { Route as BookRouteImport } from './routes/book'
+import { Route as BecomeProviderRouteImport } from './routes/become-provider'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
@@ -23,6 +24,11 @@ const MyBookingsRoute = MyBookingsRouteImport.update({
 const BookRoute = BookRouteImport.update({
   id: '/book',
   path: '/book',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BecomeProviderRoute = BecomeProviderRouteImport.update({
+  id: '/become-provider',
+  path: '/become-provider',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthRoute = AuthRouteImport.update({
@@ -45,6 +51,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/auth': typeof AuthRoute
+  '/become-provider': typeof BecomeProviderRoute
   '/book': typeof BookRoute
   '/my-bookings': typeof MyBookingsRoute
 }
@@ -52,6 +59,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/auth': typeof AuthRoute
+  '/become-provider': typeof BecomeProviderRoute
   '/book': typeof BookRoute
   '/my-bookings': typeof MyBookingsRoute
 }
@@ -60,21 +68,36 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/auth': typeof AuthRoute
+  '/become-provider': typeof BecomeProviderRoute
   '/book': typeof BookRoute
   '/my-bookings': typeof MyBookingsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/admin' | '/auth' | '/book' | '/my-bookings'
+  fullPaths:
+    | '/'
+    | '/admin'
+    | '/auth'
+    | '/become-provider'
+    | '/book'
+    | '/my-bookings'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/admin' | '/auth' | '/book' | '/my-bookings'
-  id: '__root__' | '/' | '/admin' | '/auth' | '/book' | '/my-bookings'
+  to: '/' | '/admin' | '/auth' | '/become-provider' | '/book' | '/my-bookings'
+  id:
+    | '__root__'
+    | '/'
+    | '/admin'
+    | '/auth'
+    | '/become-provider'
+    | '/book'
+    | '/my-bookings'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRoute
   AuthRoute: typeof AuthRoute
+  BecomeProviderRoute: typeof BecomeProviderRoute
   BookRoute: typeof BookRoute
   MyBookingsRoute: typeof MyBookingsRoute
 }
@@ -93,6 +116,13 @@ declare module '@tanstack/react-router' {
       path: '/book'
       fullPath: '/book'
       preLoaderRoute: typeof BookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/become-provider': {
+      id: '/become-provider'
+      path: '/become-provider'
+      fullPath: '/become-provider'
+      preLoaderRoute: typeof BecomeProviderRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth': {
@@ -123,6 +153,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRoute,
   AuthRoute: AuthRoute,
+  BecomeProviderRoute: BecomeProviderRoute,
   BookRoute: BookRoute,
   MyBookingsRoute: MyBookingsRoute,
 }
