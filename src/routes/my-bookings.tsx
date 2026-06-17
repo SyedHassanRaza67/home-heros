@@ -14,6 +14,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
 import { StatusBadge } from "@/components/status-badge";
 import { StarRating, RatingSummary } from "@/components/star-rating";
+import { PaymentMethodBadge } from "@/components/payment-method-badge";
 import type { Tables } from "@/integrations/supabase/types";
 
 export const Route = createFileRoute("/my-bookings")({
