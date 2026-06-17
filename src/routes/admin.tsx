@@ -12,6 +12,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { StatusBadge } from "@/components/status-badge";
+import { PaymentMethodBadge } from "@/components/payment-method-badge";
 import { RatingSummary } from "@/components/star-rating";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
@@ -181,7 +182,7 @@ function AdminPage() {
                           <div className="flex flex-wrap items-center gap-2">
                             <h3 className="text-lg font-semibold">{b.service_name}</h3>
                             <StatusBadge status={b.status} />
-                            <span className="text-sm font-semibold text-muted-foreground">PKR {Number(b.price).toLocaleString()}</span>
+                            <PaymentMethodBadge method={b.payment_method} />
                           </div>
                           <div className="grid gap-1 text-sm md:grid-cols-2">
                             <p><span className="text-muted-foreground">Customer:</span> {b.customer_name ?? "—"}</p>
@@ -195,6 +196,28 @@ function AdminPage() {
                               {assigned ? `${assigned.full_name} (${assigned.phone})` : "Unassigned"}
                             </p>
                           </div>
+                          {(() => {
+                            const price = Number(b.price);
+                            const rate = Number(b.commission_rate ?? 0.15);
+                            const commission = price * rate;
+                            const payout = price - commission;
+                            return (
+                              <div className="mt-2 grid grid-cols-3 gap-2 rounded-lg border bg-muted/30 p-3 text-xs">
+                                <div>
+                                  <p className="text-muted-foreground">Service price</p>
+                                  <p className="mt-0.5 text-sm font-semibold">PKR {price.toLocaleString()}</p>
+                                </div>
+                                <div>
+                                  <p className="text-muted-foreground">Commission ({Math.round(rate * 100)}%)</p>
+                                  <p className="mt-0.5 text-sm font-semibold text-primary">PKR {commission.toLocaleString()}</p>
+                                </div>
+                                <div>
+                                  <p className="text-muted-foreground">Provider payout</p>
+                                  <p className="mt-0.5 text-sm font-semibold">PKR {payout.toLocaleString()}</p>
+                                </div>
+                              </div>
+                            );
+                          })()}
                         </div>
                         <div className="md:w-56 space-y-3">
                           <div>

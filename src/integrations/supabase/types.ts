@@ -19,10 +19,12 @@ export type Database = {
           address: string
           booking_date: string
           booking_time: string
+          commission_rate: number
           created_at: string
           customer_name: string | null
           id: string
           notes: string | null
+          payment_method: Database["public"]["Enums"]["payment_method"]
           phone: string
           price: number
           provider_id: string | null
@@ -35,10 +37,12 @@ export type Database = {
           address: string
           booking_date: string
           booking_time: string
+          commission_rate?: number
           created_at?: string
           customer_name?: string | null
           id?: string
           notes?: string | null
+          payment_method?: Database["public"]["Enums"]["payment_method"]
           phone: string
           price: number
           provider_id?: string | null
@@ -51,10 +55,12 @@ export type Database = {
           address?: string
           booking_date?: string
           booking_time?: string
+          commission_rate?: number
           created_at?: string
           customer_name?: string | null
           id?: string
           notes?: string | null
+          payment_method?: Database["public"]["Enums"]["payment_method"]
           phone?: string
           price?: number
           provider_id?: string | null
@@ -258,6 +264,7 @@ export type Database = {
         | "cancelled"
         | "assigned"
         | "rejected_by_provider"
+      payment_method: "cash" | "jazzcash" | "easypaisa"
       provider_status: "pending" | "approved" | "rejected"
     }
     CompositeTypes: {
@@ -396,6 +403,7 @@ export const Constants = {
         "assigned",
         "rejected_by_provider",
       ],
+      payment_method: ["cash", "jazzcash", "easypaisa"],
       provider_status: ["pending", "approved", "rejected"],
     },
   },
