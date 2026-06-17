@@ -134,7 +134,7 @@ function AdminPage() {
     return (
       <div className="flex min-h-screen flex-col">
         <SiteHeader />
-        <div className="container mx-auto flex flex-1 items-center justify-center p-8 text-muted-foreground">Loading…</div>
+        <PageLoading />
       </div>
     );
   }
@@ -167,7 +167,11 @@ function AdminPage() {
                 ))}
               </div>
 
-              {isLoading && <p className="text-muted-foreground">Loading…</p>}
+              {isLoading && (
+                <div className="flex items-center justify-center gap-2 py-10 text-muted-foreground">
+                  <Spinner /> Loading bookings…
+                </div>
+              )}
               {!isLoading && bookings.length === 0 && (
                 <Card><CardContent className="p-10 text-center text-muted-foreground">No bookings yet.</CardContent></Card>
               )}
