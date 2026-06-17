@@ -19,7 +19,7 @@ import { useAuth } from "@/hooks/use-auth";
 import type { Tables } from "@/integrations/supabase/types";
 
 export const Route = createFileRoute("/provider")({
-  head: () => ({ meta: [{ title: "Provider dashboard — Home Hero" }] }),
+  head: () => ({ meta: [{ title: "Provider dashboard — Aram Karo" }] }),
   component: ProviderPage,
 });
 
@@ -96,7 +96,7 @@ function ProviderPage() {
             <Card>
               <CardContent className="p-8 text-center space-y-4">
                 <h1 className="text-2xl font-bold">You're not a provider yet</h1>
-                <p className="text-muted-foreground">Apply to join Home Hero as a verified provider.</p>
+                <p className="text-muted-foreground">Apply to join Aram Karo as a verified provider.</p>
                 <Button asChild><Link to="/become-provider">Apply now</Link></Button>
               </CardContent>
             </Card>

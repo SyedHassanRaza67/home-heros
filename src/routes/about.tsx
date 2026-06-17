@@ -11,9 +11,9 @@ import { supabase } from "@/integrations/supabase/client";
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "Why trust Home Hero — About us" },
+      { title: "Why trust Aram Karo — About us" },
       { name: "description", content: "Verified professionals, upfront pricing, satisfaction guarantee, and real customer reviews." },
-      { property: "og:title", content: "Why trust Home Hero" },
+      { property: "og:title", content: "Why trust Aram Karo" },
       { property: "og:description", content: "Verified pros, transparent prices, real reviews." },
     ],
   }),
@@ -65,9 +65,9 @@ function AboutPage() {
       <main className="flex-1">
         <section className="bg-gradient-to-b from-secondary/60 to-background">
           <div className="container mx-auto max-w-3xl px-4 py-16 text-center">
-            <h1 className="text-4xl font-bold tracking-tight md:text-5xl">Why trust Home Hero</h1>
+            <h1 className="text-4xl font-bold tracking-tight md:text-5xl">Why trust Aram Karo</h1>
             <p className="mt-4 text-lg text-muted-foreground">
-              We built Home Hero so booking a home service in Pakistan feels as safe as ordering food online.
+              We built Aram Karo so booking a home service in Pakistan feels as safe as ordering food online.
             </p>
           </div>
         </section>

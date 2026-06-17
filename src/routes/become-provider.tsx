@@ -21,8 +21,8 @@ import type { Tables } from "@/integrations/supabase/types";
 export const Route = createFileRoute("/become-provider")({
   head: () => ({
     meta: [
-      { title: "Become a provider — Home Hero" },
-      { name: "description", content: "Apply to join Home Hero as a verified service provider." },
+      { title: "Become a provider — Aram Karo" },
+      { name: "description", content: "Apply to join Aram Karo as a verified service provider." },
     ],
   }),
   component: BecomeProviderPage,
@@ -168,7 +168,7 @@ function BecomeProviderPage() {
             <CardHeader>
               <CardTitle className="text-2xl">Become a provider</CardTitle>
               <CardDescription>
-                Apply to join Home Hero. Admin will verify and approve your account.
+                Apply to join Aram Karo. Admin will verify and approve your account.
               </CardDescription>
             </CardHeader>
             <CardContent>

@@ -11,9 +11,9 @@ const CONTACT = SUPPORT_CONTACT;
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Contact Home Hero" },
-      { name: "description", content: "Reach Home Hero by phone, email, or WhatsApp. We're here to help." },
-      { property: "og:title", content: "Contact Home Hero" },
+      { title: "Contact Aram Karo" },
+      { name: "description", content: "Reach Aram Karo by phone, email, or WhatsApp. We're here to help." },
+      { property: "og:title", content: "Contact Aram Karo" },
       { property: "og:description", content: "Phone, email, and WhatsApp — pick whatever's easiest." },
     ],
   }),
@@ -71,7 +71,7 @@ function ContactPage() {
                   <WhatsAppButton
                     phone={CONTACT.whatsapp}
                     label="Message on WhatsApp"
-                    message="Hi Home Hero, I'd like some help."
+                    message="Hi Aram Karo, I'd like some help."
                   />
                 </div>
               </CardContent>
