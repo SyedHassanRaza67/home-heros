@@ -20,7 +20,8 @@ import { WhatsAppButton } from "@/components/whatsapp-button";
 import { Spinner, PageLoading } from "@/components/spinner";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
-import { listUsers, sendPasswordReset } from "@/lib/admin.functions";
+import { listUsers, sendPasswordReset, setUserPassword } from "@/lib/admin.functions";
+import { Input } from "@/components/ui/input";
 import type { Enums, Tables } from "@/integrations/supabase/types";
 type BookingStatus = Enums<"booking_status">;
 
