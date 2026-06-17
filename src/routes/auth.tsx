@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Spinner } from "@/components/spinner";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
 
@@ -129,7 +130,7 @@ function AuthPage() {
                       <Input id="password-in" name="password" type="password" required autoComplete="current-password" />
                     </div>
                     <Button type="submit" className="w-full" disabled={submitting}>
-                      {submitting ? "Signing in…" : "Sign in"}
+                      {submitting ? (<><Spinner className="mr-2" /> Signing in…</>) : "Sign in"}
                     </Button>
                   </form>
                 </TabsContent>
@@ -149,7 +150,7 @@ function AuthPage() {
                       <Input id="password-up" name="password" type="password" required minLength={6} autoComplete="new-password" />
                     </div>
                     <Button type="submit" className="w-full" disabled={submitting}>
-                      {submitting ? "Creating…" : "Create account"}
+                      {submitting ? (<><Spinner className="mr-2" /> Creating…</>) : "Create account"}
                     </Button>
                   </form>
                 </TabsContent>
