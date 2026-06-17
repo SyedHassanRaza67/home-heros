@@ -329,6 +329,10 @@ function AdminPage() {
                 );
               })}
             </TabsContent>
+
+            <TabsContent value="users" className="pt-4 space-y-3">
+              <UsersTab />
+            </TabsContent>
           </Tabs>
         </div>
       </main>
