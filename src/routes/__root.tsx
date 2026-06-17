@@ -68,9 +68,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "HomeFix — Trusted home services in Islamabad & Rawalpindi" },
+      { title: "Home Hero — Trusted home services in Islamabad & Rawalpindi" },
       { name: "description", content: "Book trusted electricians, AC repair and more in Islamabad & Rawalpindi at fixed, transparent prices." },
-      { property: "og:title", content: "HomeFix — Trusted home services" },
+      { property: "og:title", content: "Home Hero — Trusted home services" },
       { property: "og:description", content: "Book electricians, AC repair and more at fixed prices." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

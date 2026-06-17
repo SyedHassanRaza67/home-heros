@@ -5,9 +5,9 @@ import { SiteFooter } from "@/components/site-footer";
 export const Route = createFileRoute("/privacy")({
   head: () => ({
     meta: [
-      { title: "Privacy Policy — HomeFix" },
-      { name: "description", content: "How HomeFix collects, uses, and protects your personal information." },
-      { property: "og:title", content: "Privacy Policy — HomeFix" },
+      { title: "Privacy Policy — Home Hero" },
+      { name: "description", content: "How Home Hero collects, uses, and protects your personal information." },
+      { property: "og:title", content: "Privacy Policy — Home Hero" },
       { property: "og:description", content: "Our privacy practices, in plain language." },
     ],
   }),
@@ -46,7 +46,7 @@ function PrivacyPage() {
             <Section title="4. Storage and security">
               Your data is stored securely with our cloud provider and protected by industry-standard access
               controls. Provider verification photos are stored in a private bucket and only viewable by
-              HomeFix administrators.
+              Home Hero administrators.
             </Section>
 
             <Section title="5. Your rights">
@@ -61,7 +61,7 @@ function PrivacyPage() {
             </Section>
 
             <Section title="7. Children">
-              HomeFix is not intended for users under 18. We do not knowingly collect personal data from
+              Home Hero is not intended for users under 18. We do not knowingly collect personal data from
               children.
             </Section>
 

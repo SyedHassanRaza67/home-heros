@@ -8,9 +8,9 @@ import { Button } from "@/components/ui/button";
 export const Route = createFileRoute("/how-it-works")({
   head: () => ({
     meta: [
-      { title: "How it works — HomeFix" },
+      { title: "How it works — Home Hero" },
       { name: "description", content: "Three simple steps to book a verified professional in Islamabad or Rawalpindi." },
-      { property: "og:title", content: "How HomeFix works" },
+      { property: "og:title", content: "How Home Hero works" },
       { property: "og:description", content: "Book a service, get a verified pro, and pay only when the job is done." },
     ],
   }),
@@ -26,7 +26,7 @@ const STEPS = [
   {
     icon: ShieldCheck,
     title: "A verified professional is assigned",
-    desc: "Every provider on HomeFix has their CNIC and photo verified by our team before they ever take a job.",
+    desc: "Every provider on Home Hero has their CNIC and photo verified by our team before they ever take a job.",
   },
   {
     icon: Star,
@@ -42,7 +42,7 @@ function HowItWorks() {
       <main className="flex-1">
         <section className="bg-gradient-to-b from-secondary/60 to-background">
           <div className="container mx-auto max-w-3xl px-4 py-16 text-center">
-            <h1 className="text-4xl font-bold tracking-tight md:text-5xl">How HomeFix works</h1>
+            <h1 className="text-4xl font-bold tracking-tight md:text-5xl">How Home Hero works</h1>
             <p className="mt-4 text-lg text-muted-foreground">
               Three simple steps from request to a clean, finished job.
             </p>

@@ -13,7 +13,7 @@ import type { Tables } from "@/integrations/supabase/types";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "HomeFix — Book trusted home services in Islamabad & Rawalpindi" },
+      { title: "Home Hero — Book trusted home services in Islamabad & Rawalpindi" },
       { name: "description", content: "Book electricians, AC repair and more at fixed, transparent prices. Vetted technicians, same-day service." },
     ],
   }),
@@ -154,7 +154,7 @@ function Home() {
             </div>
             <div className="mt-8 text-center">
               <Link to="/how-it-works" className="text-sm font-medium text-primary hover:underline">
-                Learn more about how HomeFix works →
+                Learn more about how Home Hero works →
               </Link>
             </div>
           </div>
