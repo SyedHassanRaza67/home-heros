@@ -6,6 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { TrustBadges } from "@/components/trust-badges";
+import { StarRating } from "@/components/star-rating";
 import { supabase } from "@/integrations/supabase/client";
 import type { Tables } from "@/integrations/supabase/types";
 
