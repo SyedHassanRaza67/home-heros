@@ -1,10 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { Zap, Snowflake, ShieldCheck, Clock, BadgeCheck, Wrench } from "lucide-react";
+import { Zap, Snowflake, Wrench, BadgeCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { TrustBadges } from "@/components/trust-badges";
 import { supabase } from "@/integrations/supabase/client";
 import type { Tables } from "@/integrations/supabase/types";
 
@@ -68,17 +69,8 @@ function Home() {
               </div>
             </div>
 
-            <div className="mx-auto mt-12 grid max-w-3xl grid-cols-1 gap-4 sm:grid-cols-3">
-              {[
-                { icon: ShieldCheck, label: "Vetted pros" },
-                { icon: Clock, label: "Same-day service" },
-                { icon: BadgeCheck, label: "Fixed pricing" },
-              ].map((f) => (
-                <div key={f.label} className="flex items-center justify-center gap-2 rounded-lg border bg-card p-3 text-sm font-medium">
-                  <f.icon className="h-4 w-4 text-primary" />
-                  {f.label}
-                </div>
-              ))}
+            <div className="mx-auto mt-12 max-w-3xl">
+              <TrustBadges />
             </div>
           </div>
         </section>

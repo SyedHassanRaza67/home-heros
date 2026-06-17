@@ -16,6 +16,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Calendar } from "@/components/ui/calendar";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { TrustBadges } from "@/components/trust-badges";
 import { cn } from "@/lib/utils";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
@@ -145,6 +146,7 @@ function BookPage() {
       <SiteHeader />
       <main className="flex-1 bg-secondary/30">
         <div className="container mx-auto max-w-2xl px-4 py-10">
+          <TrustBadges variant="compact" className="mb-4 justify-center" />
           <Card>
             <CardHeader>
               <CardTitle className="text-2xl">Book a service</CardTitle>
