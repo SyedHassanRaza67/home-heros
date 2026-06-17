@@ -51,20 +51,20 @@ function Home() {
                 <BadgeCheck className="h-3.5 w-3.5 text-primary" />
                 Vetted technicians · Fixed prices
               </div>
-              <h1 className="text-4xl font-bold tracking-tight md:text-6xl">
+              <h1 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-6xl">
                 Book trusted home services in{" "}
                 <span className="text-primary">Islamabad &amp; Rawalpindi</span>
               </h1>
-              <p className="mt-6 text-lg text-muted-foreground md:text-xl">
+              <p className="mt-5 text-base text-muted-foreground sm:mt-6 sm:text-lg md:text-xl">
                 Skilled electricians and AC technicians at your doorstep — at honest,
                 upfront prices. No surprises.
               </p>
-              <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+              <div className="mt-8 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center">
                 <Button size="lg" asChild>
                   <Link to="/book">Book a service</Link>
                 </Button>
                 <Button size="lg" variant="outline" asChild>
-                  <a href="#services">See services</a>
+                  <Link to="/how-it-works">How it works</Link>
                 </Button>
               </div>
             </div>
