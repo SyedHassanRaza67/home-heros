@@ -16,41 +16,51 @@ export type AuthState = {
 export function useAuth(): AuthState {
   const [session, setSession] = useState<Session | null>(null);
   const [roles, setRoles] = useState<AppRole[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [sessionLoading, setSessionLoading] = useState(true);
+  const [rolesLoading, setRolesLoading] = useState(true);
 
   useEffect(() => {
-    const loadRoles = (uid: string) => {
-      supabase
+    const loadRoles = async (uid: string) => {
+      setRolesLoading(true);
+      const { data } = await supabase
         .from("user_roles")
         .select("role")
-        .eq("user_id", uid)
-        .then(({ data }) => setRoles((data ?? []).map((r) => r.role)));
+        .eq("user_id", uid);
+      setRoles((data ?? []).map((r) => r.role));
+      setRolesLoading(false);
     };
 
     const { data: sub } = supabase.auth.onAuthStateChange((_event, s) => {
       setSession(s);
       if (s?.user) {
-        setTimeout(() => loadRoles(s.user.id), 0);
+        setRolesLoading(true);
+        loadRoles(s.user.id);
       } else {
         setRoles([]);
+        setRolesLoading(false);
       }
     });
 
     supabase.auth.getSession().then(({ data }) => {
       setSession(data.session);
-      if (data.session?.user) loadRoles(data.session.user.id);
-      setLoading(false);
+      if (data.session?.user) {
+        loadRoles(data.session.user.id);
+      } else {
+        setRolesLoading(false);
+      }
+      setSessionLoading(false);
     });
 
     return () => sub.subscription.unsubscribe();
   }, []);
 
+  const user = session?.user ?? null;
   return {
     session,
-    user: session?.user ?? null,
+    user,
     roles,
     isAdmin: roles.includes("admin"),
     isProvider: roles.includes("provider"),
-    loading,
+    loading: sessionLoading || (!!user && rolesLoading),
   };
 }
