@@ -9,6 +9,7 @@ export type AuthState = {
   user: User | null;
   roles: AppRole[];
   isAdmin: boolean;
+  isProvider: boolean;
   loading: boolean;
 };
 
@@ -18,17 +19,18 @@ export function useAuth(): AuthState {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const loadRoles = (uid: string) => {
+      supabase
+        .from("user_roles")
+        .select("role")
+        .eq("user_id", uid)
+        .then(({ data }) => setRoles((data ?? []).map((r) => r.role)));
+    };
+
     const { data: sub } = supabase.auth.onAuthStateChange((_event, s) => {
       setSession(s);
       if (s?.user) {
-        // defer to next tick to avoid deadlock
-        setTimeout(() => {
-          supabase
-            .from("user_roles")
-            .select("role")
-            .eq("user_id", s.user.id)
-            .then(({ data }) => setRoles((data ?? []).map((r) => r.role)));
-        }, 0);
+        setTimeout(() => loadRoles(s.user.id), 0);
       } else {
         setRoles([]);
       }
@@ -36,13 +38,7 @@ export function useAuth(): AuthState {
 
     supabase.auth.getSession().then(({ data }) => {
       setSession(data.session);
-      if (data.session?.user) {
-        supabase
-          .from("user_roles")
-          .select("role")
-          .eq("user_id", data.session.user.id)
-          .then(({ data: rd }) => setRoles((rd ?? []).map((r) => r.role)));
-      }
+      if (data.session?.user) loadRoles(data.session.user.id);
       setLoading(false);
     });
 
@@ -54,6 +50,7 @@ export function useAuth(): AuthState {
     user: session?.user ?? null,
     roles,
     isAdmin: roles.includes("admin"),
+    isProvider: roles.includes("provider"),
     loading,
   };
 }
