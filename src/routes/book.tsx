@@ -53,6 +53,7 @@ function BookPage() {
   const search = Route.useSearch();
   const [date, setDate] = useState<Date | undefined>();
   const [service, setService] = useState<string>(search.service ?? "");
+  const [paymentMethod, setPaymentMethod] = useState<"cash" | "jazzcash" | "easypaisa">("cash");
   const [submitting, setSubmitting] = useState(false);
 
   const { data: services = [] } = useQuery({
