@@ -14,6 +14,8 @@ import { Badge } from "@/components/ui/badge";
 import { StatusBadge } from "@/components/status-badge";
 import { PaymentMethodBadge } from "@/components/payment-method-badge";
 import { RatingSummary } from "@/components/star-rating";
+import { BookingProgress } from "@/components/booking-progress";
+import { WhatsAppButton } from "@/components/whatsapp-button";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
 import type { Enums, Tables } from "@/integrations/supabase/types";
@@ -25,7 +27,7 @@ export const Route = createFileRoute("/admin")({
 });
 
 const STATUSES: BookingStatus[] = [
-  "pending", "assigned", "confirmed", "in_progress", "completed", "cancelled", "rejected_by_provider",
+  "pending", "confirmed", "in_progress", "completed", "cancelled", "assigned", "rejected_by_provider",
 ];
 
 function AdminPage() {
@@ -218,6 +220,21 @@ function AdminPage() {
                               </div>
                             );
                           })()}
+                          <div className="mt-2 rounded-lg border bg-background p-3">
+                            <BookingProgress status={b.status} />
+                          </div>
+                          <div className="flex flex-wrap gap-2 pt-1">
+                            <WhatsAppButton
+                              phone={b.phone}
+                              label={`Customer${b.customer_name ? ` (${b.customer_name.split(" ")[0]})` : ""}`}
+                            />
+                            {assigned && (
+                              <WhatsAppButton
+                                phone={assigned.phone}
+                                label={`Provider (${assigned.full_name.split(" ")[0]})`}
+                              />
+                            )}
+                          </div>
                         </div>
                         <div className="md:w-56 space-y-3">
                           <div>
@@ -243,6 +260,16 @@ function AdminPage() {
                               </SelectContent>
                             </Select>
                           </div>
+                          {b.status !== "cancelled" && b.status !== "completed" && (
+                            <Button
+                              size="sm"
+                              variant="destructive"
+                              className="w-full"
+                              onClick={() => updateStatus(b.id, "cancelled")}
+                            >
+                              Cancel booking
+                            </Button>
+                          )}
                         </div>
                       </div>
                     </CardContent>
